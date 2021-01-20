@@ -15,20 +15,20 @@ sap.ui.define([
     },
 
     initSampleDataModel : function() {
-			var oModel = new JSONModel();
-
-			jQuery.ajax(sap.ui.require.toUrl("com.myorg.contactList\contacts.json"), {
-				dataType: "json",
-				success: function(oData) {
-          Log.success("conected");
-        },
-				error: function() {
-					Log.error("failed to load json");
-				}
-			});
-
-			return oModel;
-		},
+		var oModel = new JSONModel({
+		    "ContactsCollection":[
+		        {
+		            "Name": "erick",
+		            "Telephone": "(15)99818-1242"
+		        },
+		        {
+		            "Name": "Bob",
+		            "Telephone": "(19)97858-1112"
+		        }
+		    ]
+		});
+		return oModel;
+	},
   
     onClickAddContactButton: function(oEvent){
     	MessageBox.success('clicou no botão novo contato');

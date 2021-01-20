@@ -4,9 +4,34 @@
   xmlns:mvc="sap.ui.core.mvc">
   <App id="idAppControl" >
     <pages>
-      <Page title="{i18n>title}">
-        <content></content>
-      </Page>
+        <Page showHeader="true" title="Lista de Contatos">
+          <FlexBox alignItems="Start">
+            <Button text="Adicionar Contato" width="100%"  press="onClickAddContactButton" class="sapUiSmallMarginEnd">
+              <layoutData><FlexItemData growFactor="1" /></layoutData>
+            </Button>
+            <Button text="Alterar Contato" width="100%"  press="onClickChangeContactButton" class="sapUiSmallMarginEnd">
+              <layoutData><FlexItemData growFactor="1" /></layoutData>
+            </Button>
+            <Button text="Excluir Contato" width="100%"  press="onClickDeleteContactButton" class="sapUiSmallMarginEnd">
+              <layoutData><FlexItemData growFactor="1" /></layoutData>
+            </Button> 
+          </FlexBox>
+
+          <content>
+            <Table rows="{/ContactsCollection}" selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste" ariaLabelledBy="title">
+              <columns>
+                <Column>
+                  <Label text="Nome" />
+                </Column>
+
+                <Column>
+                  <Label text="Telefone" />
+                </Column>
+              </columns>
+            </Table>
+          </content>
+
+        </Page>
     </pages>
   </App>
 </mvc:View>

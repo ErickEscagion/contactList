@@ -72,7 +72,7 @@
       },
       "routes": [
         {
-          "name": "RouteMainView",
+          "name": "MainView",
           "pattern": "RouteMainView",
           "target": [
             "TargetMainView"

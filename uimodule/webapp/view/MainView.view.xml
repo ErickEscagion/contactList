@@ -7,13 +7,13 @@
     <pages>
         <Page showHeader="true" title="Lista de Contatos">
           <FlexBox alignItems="Start">
-            <Button text="Adicionar Contato" width="100%"  press=".onClickAddContactButton" class="sapUiSmallMarginEnd">
+            <Button text="Adicionar Contato" width="100%"  press="onClickAddContactButton" class="sapUiSmallMarginEnd">
               <layoutData><FlexItemData growFactor="1" /></layoutData>
             </Button>
-            <Button text="Alterar Contato" width="100%"  press=".onClickChangeContactButton" class="sapUiSmallMarginEnd">
+            <Button text="Alterar Contato" width="100%"  press="onClickChangeContactButton" class="sapUiSmallMarginEnd">
               <layoutData><FlexItemData growFactor="1" /></layoutData>
             </Button>
-            <Button text="Excluir Contato" width="100%"  press=".onClickDeleteContactButton" class="sapUiSmallMarginEnd">
+            <Button text="Excluir Contato" width="100%"  press="onClickDeleteContactButton" class="sapUiSmallMarginEnd">
               <layoutData><FlexItemData growFactor="1" /></layoutData>
             </Button> 
             <Button text="View Teste" width="100%"  press="onClickViewTestButton" class="sapUiSmallMarginEnd">

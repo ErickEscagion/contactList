@@ -60,13 +60,14 @@ sap.ui.define([
             width: "100%",
             placeholder: "Adicione o nome (obrigatorio)",
           }),
+          
           new Label({
             text: "Telefone",
             labelFor: "submissionTelephone"
           }),
           new TextArea("submissionTelephone", {
             width: "100%",
-            placeholder: "Adicione o Telefone (obrigatorio)"
+            placeholder: "Adicione o Telefone (obrigatorio)",
           })
         ],
         beginButton: new Button({
@@ -77,18 +78,21 @@ sap.ui.define([
             const varName = Core.byId("submissionName").getValue();
             const varTelephone = Core.byId("submissionTelephone").getValue();
 
-          /**  
+          
             const newContact = {
               "Name": varName,
               "Telephone": varTelephone
             };
 
-          const contactCollection = this.getModel().getProperty("ContactsCollection");
+          const oModel = this.getView().getModel();
+          
+          oModel.oData.ContactsCollection.push(newContact);
+          
+          const newModel = new JSONModel(oModel.oData);
 
-          debugger
-          contactCollection.push(newContact);
-          debugger
-          */
+          this.getView().setModel(newModel);
+
+          
             MessageToast.show("Contato Salvo!!\nnome:" +varName+ "\ntel:"+ varTelephone);
 
             this.oSubmitDialog.close();

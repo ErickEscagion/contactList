@@ -30,12 +30,12 @@ sap.ui.define([
 		var oModel = new JSONModel({
 		    "ContactsCollection":[
 		        {
-		            "Name": "erick",
-		            "Telephone": "(15)99818-1242"
+		          "Name": "erick",
+		          "Telephone": "(15)99818-1242"
 		        },
 		        {
-		            "Name": "Bob",
-		            "Telephone": "(19)97858-1112"
+		          "Name": "Bob",
+		          "Telephone": "(19)97858-1112"
             },
             {
               "Name": "Paula",
@@ -74,17 +74,23 @@ sap.ui.define([
           text: "Salvar",
           enabled: true,
           press: function () {
-            var varName = Core.byId("submissionName").getValue();
-            var varTelephone = Core.byId("submissionTelephone").getValue();
+            const varName = Core.byId("submissionName").getValue();
+            const varTelephone = Core.byId("submissionTelephone").getValue();
 
+          /**  
             const newContact = {
               "Name": varName,
               "Telephone": varTelephone
-            }
-            
-            //this.getModel().getProperty("ContactsCollection").push(newContact);
+            };
 
+          const contactCollection = this.getModel().getProperty("ContactsCollection");
+
+          debugger
+          contactCollection.push(newContact);
+          debugger
+          */
             MessageToast.show("Contato Salvo!!\nnome:" +varName+ "\ntel:"+ varTelephone);
+
             this.oSubmitDialog.close();
           }.bind(this)
         }),
@@ -101,12 +107,83 @@ sap.ui.define([
   },
 
     onClickChangeContactButton: function(oEvent){
-    	MessageBox.success('clicou no botão alterar contato');
+      if (!this.OChangeDialog) {
+        this.OChangeDialog = new Dialog({
+          type: DialogType.Message,
+          title: "Alterar Contato",
+          content: [
+            new Label({
+              text: "Nome",
+              labelFor: "submissionName"
+            }),
+            new TextArea("submissionName", {
+              width: "100%",
+              placeholder: "carregar o nome",
+            }),
+            new Label({
+              text: "Telefone",
+              labelFor: "submissionTelephone"
+            }),
+            new TextArea("submissionTelephone", {
+              width: "100%",
+              placeholder: "carregar o telefone"
+            })
+          ],
+          beginButton: new Button({
+            type: ButtonType.Emphasized,
+            text: "Salvar",
+            enabled: true,
+            press: function () {
+              const varName = Core.byId("submissionName").getValue();
+              const varTelephone = Core.byId("submissionTelephone").getValue();
+    
+            /**logica para alterar o contato
+             * 
+             * 
+             */
+
+            MessageToast.show("Contato Alterado!!\nnome:" +varName+ "\ntel:"+ varTelephone);
+  
+              this.OChangeDialog.close();
+            }.bind(this)
+          }),
+          endButton: new Button({
+            text: "Cancelar",
+            press: function () {
+              this.OChangeDialog.close();
+            }.bind(this)
+          })
+        });
+      }
+  
+      this.OChangeDialog.open();
     },
 
     onClickDeleteContactButton: function(oEvent){
-    	MessageBox.success('clicou no botão excluir contato');
-    },
+      if (!this.confirmDeletion) {
+				this.confirmDeletion = new Dialog({
+					type: DialogType.Message,
+					title: "Excluir o contato?",
+					content: new Text({ text: "Essa ação e irreversivel!!" }),
+					beginButton: new Button({
+						type: ButtonType.Emphasized,
+						text: "Confirmar",
+						press: function () {
+							MessageToast.show("Contato Excluido");
+							this.confirmDeletion.close();
+						}.bind(this)
+					}),
+					endButton: new Button({
+						text: "Cancelar",
+						press: function () {
+							this.confirmDeletion.close();
+						}.bind(this)
+					})
+				});
+			}
+
+			this.confirmDeletion.open();
+		},
 
     onClickViewTestButton: function(oEvent){
       var oRouter = sap.ui.core.UIComponent.getRouterFor(this);

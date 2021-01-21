@@ -48,9 +48,6 @@ sap.ui.define([
   
   onClickAddContactButton: function () {
     if (!this.oSubmitDialog) {
-      var varName;
-      var varTelephone;
-
       this.oSubmitDialog = new Dialog({
         type: DialogType.Message,
         title: "Novo Contato",
@@ -62,9 +59,6 @@ sap.ui.define([
           new TextArea("submissionName", {
             width: "100%",
             placeholder: "Adicione o nome (obrigatorio)",
-            liveChange: function (oEvent) {
-              varName = oEvent.getParameter("value");
-            }.bind(this)
           }),
           new Label({
             text: "Telefone",
@@ -72,18 +66,16 @@ sap.ui.define([
           }),
           new TextArea("submissionTelephone", {
             width: "100%",
-            placeholder: "Adicione o Telefone (obrigatorio)",
-            liveChange: function (oEvent) {
-              varTelephone = oEvent.getParameter("value");
-            }.bind(this)
-          }),
-
+            placeholder: "Adicione o Telefone (obrigatorio)"
+          })
         ],
         beginButton: new Button({
           type: ButtonType.Emphasized,
           text: "Salvar",
           enabled: true,
           press: function () {
+            var varName = Core.byId("submissionName").getValue();
+            var varTelephone = Core.byId("submissionTelephone").getValue();
 
             const newContact = {
               "Name": varName,
@@ -92,7 +84,7 @@ sap.ui.define([
             
             //this.getModel().getProperty("ContactsCollection").push(newContact);
 
-            MessageToast.show("Contato Salvo!!" +varName + varTelephone);
+            MessageToast.show("Contato Salvo!!\nnome:" +varName+ "\ntel:"+ varTelephone);
             this.oSubmitDialog.close();
           }.bind(this)
         }),

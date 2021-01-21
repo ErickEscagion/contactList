@@ -73,8 +73,7 @@ sap.ui.define([
           press: function () {
             let varName = Core.byId("submissionNameAdd").getValue();
             let varTelephone = Core.byId("submissionTelephoneAdd").getValue();
-
-          
+            
             let newContact = {
               "Name": varName,
               "Telephone": varTelephone
@@ -102,7 +101,6 @@ sap.ui.define([
         })
       });
     }
-
     this.oSubmitDialog.open();
   },
 
@@ -169,7 +167,21 @@ sap.ui.define([
 						type: ButtonType.Emphasized,
 						text: "Confirmar",
 						press: function () {
-							MessageToast.show("Contato Excluido");
+            let key = this.getView().getModel().oData.ContactsCollection;
+
+            //aria-rowindex
+debugger
+  /**   
+            let oModel = this.getView().getModel()
+            
+            oModel.oData.ContactsCollection.destroy();
+
+            let newModel = new JSONModel(oModel.oData);
+
+            this.getView().setModel(newModel);
+*/
+
+							MessageToast.show("Contato Excluido "+key);
 							this.confirmDeletion.close();
 						}.bind(this)
 					}),

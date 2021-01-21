@@ -3,8 +3,7 @@ sap.ui.define([
   "sap/m/MessageBox",
   "sap/base/Log",
   "sap/ui/model/json/JSONModel",
-  "sap/ui/thirdparty/jquery",
-], function(Controller, MessageBox, Log, JSONModel, jQuery, oDialog1) {
+], function(Controller, MessageBox, Log, JSONModel) {
   "use strict";
 
   return Controller.extend("com.myorg.contactList.controller.MainView", {

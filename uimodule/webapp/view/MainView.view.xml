@@ -16,6 +16,9 @@
             <Button text="Excluir Contato" width="100%"  press="onClickDeleteContactButton" class="sapUiSmallMarginEnd">
               <layoutData><FlexItemData growFactor="1" /></layoutData>
             </Button> 
+            <Button text="View Teste" width="100%"  press="onClickViewTestButton" class="sapUiSmallMarginEnd">
+              <layoutData><FlexItemData growFactor="1" /></layoutData>
+            </Button> 
           </FlexBox>
 
           <content>

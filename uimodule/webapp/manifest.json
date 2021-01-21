@@ -77,14 +77,26 @@
           "target": [
             "TargetMainView"
           ]
+        },
+        {
+          "name": "TestView",
+          "pattern": "RouteTestView",
+          "target": [
+            "TargetTestView"
+          ]
         }
       ],
       "targets": {
         "TargetMainView": {
           "viewType": "XML",
           "viewLevel": 1,
-          "viewId": "idAppControl",
+          "viewId": "MainView",
           "viewName": "MainView"
+        },
+        "TargetTestView": {
+          "viewType": "XML",
+          "viewId": "TestView",
+          "viewName": "TestView"
         }
       }
     }

@@ -3,6 +3,7 @@ sap.ui.define([
   "sap/m/MessageBox",
   "sap/base/Log",
   "sap/ui/model/json/JSONModel",
+
 ], function(Controller, MessageBox, Log, JSONModel) {
   "use strict";
 
@@ -34,42 +35,22 @@ sap.ui.define([
 	},
   
     onClickAddContactButton: function(oEvent){
-      var oDialog1 = new sap.ui.commons.Dialog("Dialog", {
-        modal: true,
-        closed: function(oControlEvent){
-          sap.ui.getCore().getElementById('Dialog').destroy();
-        }
-      });
-      oDialog1.setTitle("Adicionar Contatos");
-      var oLayout = new sap.ui.commons.layout.MatrixLayout({
-        columns: 2,
-        width: "100%"
-        });               
-             var oLabel=new sap.ui.commons.Label({text: "Nome"});
-             var oTF= new sap.ui.commons.TextField("empName",{width: '200px'});
-             oLayout.createRow(oLabel, oTF);
-     
-             var oLabel=new sap.ui.commons.Label({text: "Telefone"});
-             var oTF=new sap.ui.commons.TextField("empTelephone",{width: '200px'});
-             oLayout.createRow(oLabel, oTF);
+      var oDialog = new sap.ui.commons.Dialog({
 
-            oDialog1.addContent(oLayout);
-            oDialog1.addButton(new sap.ui.commons.Button({text: "Salvar", press:function(){
-
-            var name    = sap.ui.getCore().getControl("empName").getValue(); 
-            var telephone     = sap.ui.getCore().getControl("empTelephone").getValue(); 
-            console.log(name);
-            console.log(telephone);
-
-            const newContact = {
-              "Name": name,
-              "Telephone": telephone
-            }
-            this.getModel().getProperty("ContactsCollection").push(newContact);
-            alert("SALVO COM SUCESSO");
-            
-            oDialog1.close();}}));
-            oDialog1.open();
+        modal : true,
+        
+        height : "90%",
+        
+        width : "90%",
+        
+        // buttons : [ oBtnBack, oBtnNext, oBtnCancel ],
+        
+        content : [ oView ]
+        
+        });
+        
+        oDialog.open();
+        
     },
 
     onClickChangeContactButton: function(oEvent){
@@ -78,6 +59,11 @@ sap.ui.define([
 
     onClickDeleteContactButton: function(oEvent){
     	MessageBox.success('clicou no botão excluir contato');
+    },
+
+    onClickViewTestButton: function(oEvent){
+      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+      oRouter.navTo("TestView");
     }
 
   });

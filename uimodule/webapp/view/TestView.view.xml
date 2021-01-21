@@ -1,0 +1,19 @@
+ <mvc:View controllerName="com.myorg.contactList.controller.TestView"
+  displayBlock="true"
+  xmlns="sap.m"
+  xmlns:mvc="sap.ui.core.mvc">
+  <App id="TestView" >
+    <pages>
+      <Page title="View de Testes">
+        <FlexBox alignItems="Start">
+            <Button text="Adicionar Contato" width="100%"  press="onClickAddContactButton" class="sapUiSmallMarginEnd">
+              <layoutData><FlexItemData growFactor="1" /></layoutData>
+            </Button>
+            <Button text="View Principal" width="100%"  press="onClickViewTestButton" class="sapUiSmallMarginEnd">
+              <layoutData><FlexItemData growFactor="1" /></layoutData>
+            </Button> 
+          </FlexBox>
+      </Page>
+    </pages>
+  </App>
+</mvc:View>

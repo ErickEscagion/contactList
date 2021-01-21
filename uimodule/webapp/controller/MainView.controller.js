@@ -1,12 +1,8 @@
 sap.ui.define([
   "com/myorg/contactList/controller/BaseController",
-  "sap/m/MessageBox",
   "sap/base/Log",
   "sap/ui/model/json/JSONModel",
-
   "sap/ui/core/Core",
-	"sap/ui/layout/HorizontalLayout",
-	"sap/ui/layout/VerticalLayout",
 	"sap/m/Dialog",
 	"sap/m/DialogType",
 	"sap/m/Button",
@@ -16,7 +12,7 @@ sap.ui.define([
 	"sap/m/Text",
 	"sap/m/TextArea"
 
-], function(Controller, MessageBox, Log, JSONModel, Core, HorizontalLayout, VerticalLayout, Dialog, DialogType, Button, ButtonType, Label, MessageToast, Text, TextArea) {
+], function(Controller, Log, JSONModel, Core, Dialog, DialogType, Button, ButtonType, Label, MessageToast, Text, TextArea) {
   "use strict";
 
   return Controller.extend("com.myorg.contactList.controller.MainView", {
@@ -54,18 +50,18 @@ sap.ui.define([
         content: [
           new Label({
             text: "Nome",
-            labelFor: "submissionName"
+            labelFor: "submissionNameAdd"
           }),
-          new TextArea("submissionName", {
+          new TextArea("submissionNameAdd", {
             width: "100%",
             placeholder: "Adicione o nome (obrigatorio)",
           }),
           
           new Label({
             text: "Telefone",
-            labelFor: "submissionTelephone"
+            labelFor: "submissionTelephoneAdd"
           }),
-          new TextArea("submissionTelephone", {
+          new TextArea("submissionTelephoneAdd", {
             width: "100%",
             placeholder: "Adicione o Telefone (obrigatorio)",
           })
@@ -75,20 +71,20 @@ sap.ui.define([
           text: "Salvar",
           enabled: true,
           press: function () {
-            const varName = Core.byId("submissionName").getValue();
-            const varTelephone = Core.byId("submissionTelephone").getValue();
+            let varName = Core.byId("submissionNameAdd").getValue();
+            let varTelephone = Core.byId("submissionTelephoneAdd").getValue();
 
           
-            const newContact = {
+            let newContact = {
               "Name": varName,
               "Telephone": varTelephone
             };
 
-          const oModel = this.getView().getModel();
+          let oModel = this.getView().getModel();
           
           oModel.oData.ContactsCollection.push(newContact);
           
-          const newModel = new JSONModel(oModel.oData);
+          let newModel = new JSONModel(oModel.oData);
 
           this.getView().setModel(newModel);
 
@@ -118,17 +114,17 @@ sap.ui.define([
           content: [
             new Label({
               text: "Nome",
-              labelFor: "submissionName"
+              labelFor: "submissionNameChange"
             }),
-            new TextArea("submissionName", {
+            new TextArea("submissionNameChange", {
               width: "100%",
               placeholder: "carregar o nome",
             }),
             new Label({
               text: "Telefone",
-              labelFor: "submissionTelephone"
+              labelFor: "submissionTelephoneChange"
             }),
-            new TextArea("submissionTelephone", {
+            new TextArea("submissionTelephoneChange", {
               width: "100%",
               placeholder: "carregar o telefone"
             })
@@ -138,8 +134,8 @@ sap.ui.define([
             text: "Salvar",
             enabled: true,
             press: function () {
-              const varName = Core.byId("submissionName").getValue();
-              const varTelephone = Core.byId("submissionTelephone").getValue();
+              const varName = Core.byId("submissionNameChange").getValue();
+              const varTelephone = Core.byId("submissionTelephoneChange").getValue();
     
             /**logica para alterar o contato
              * 

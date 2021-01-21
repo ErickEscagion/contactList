@@ -4,7 +4,19 @@ sap.ui.define([
   "sap/base/Log",
   "sap/ui/model/json/JSONModel",
 
-], function(Controller, MessageBox, Log, JSONModel) {
+  "sap/ui/core/Core",
+	"sap/ui/layout/HorizontalLayout",
+	"sap/ui/layout/VerticalLayout",
+	"sap/m/Dialog",
+	"sap/m/DialogType",
+	"sap/m/Button",
+	"sap/m/ButtonType",
+	"sap/m/Label",
+	"sap/m/MessageToast",
+	"sap/m/Text",
+	"sap/m/TextArea"
+
+], function(Controller, MessageBox, Log, JSONModel, Core, HorizontalLayout, VerticalLayout, Dialog, DialogType, Button, ButtonType, Label, MessageToast, Text, TextArea) {
   "use strict";
 
   return Controller.extend("com.myorg.contactList.controller.MainView", {
@@ -34,24 +46,67 @@ sap.ui.define([
 		return oModel;
 	},
   
-    onClickAddContactButton: function(oEvent){
-      var oDialog = new sap.ui.commons.Dialog({
+  onClickAddContactButton: function () {
+    if (!this.oSubmitDialog) {
+      var varName;
+      var varTelephone;
 
-        modal : true,
-        
-        height : "90%",
-        
-        width : "90%",
-        
-        // buttons : [ oBtnBack, oBtnNext, oBtnCancel ],
-        
-        content : [ oView ]
-        
-        });
-        
-        oDialog.open();
-        
-    },
+      this.oSubmitDialog = new Dialog({
+        type: DialogType.Message,
+        title: "Novo Contato",
+        content: [
+          new Label({
+            text: "Nome",
+            labelFor: "submissionName"
+          }),
+          new TextArea("submissionName", {
+            width: "100%",
+            placeholder: "Adicione o nome (obrigatorio)",
+            liveChange: function (oEvent) {
+              varName = oEvent.getParameter("value");
+            }.bind(this)
+          }),
+          new Label({
+            text: "Telefone",
+            labelFor: "submissionTelephone"
+          }),
+          new TextArea("submissionTelephone", {
+            width: "100%",
+            placeholder: "Adicione o Telefone (obrigatorio)",
+            liveChange: function (oEvent) {
+              varTelephone = oEvent.getParameter("value");
+            }.bind(this)
+          }),
+
+        ],
+        beginButton: new Button({
+          type: ButtonType.Emphasized,
+          text: "Salvar",
+          enabled: true,
+          press: function () {
+
+            const newContact = {
+              "Name": varName,
+              "Telephone": varTelephone
+            }
+            
+            //this.getModel().getProperty("ContactsCollection").push(newContact);
+
+            MessageToast.show("Contato Salvo!!" +varName + varTelephone);
+            this.oSubmitDialog.close();
+          }.bind(this)
+        }),
+        endButton: new Button({
+          text: "Cancelar",
+          press: function () {
+            this.oSubmitDialog.close();
+          }.bind(this)
+        })
+      });
+    }
+
+    this.oSubmitDialog.open();
+  },
 
     onClickChangeContactButton: function(oEvent){
     	MessageBox.success('clicou no botão alterar contato');

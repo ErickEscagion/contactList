@@ -4,18 +4,20 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:core="sap.ui.core">
 
+    
 
-    <VBox
-    class="sapUiSmallMargin">
-    <f:SimpleForm title="Contacts" >
-        <f:content>
-            <Input placeholder="Name" type="Text"/>
-            <Input placeholder="Salary" type="Number" />
-            <Button text="Save" width="100%"></Button>  
-            <Button text="Exit" width="100%"></Button> 
-        </f:content>
-    </f:SimpleForm>
-    </VBox>
+    <VBox>
+		<f:SimpleForm title="Contacts" id="PopUpContacts">
+			<Label text="" />
+			<Input placeholder="Name" type="Text" id= "Name" text="{Telephone}"/>
+			<Label text=""/>
+			<Input placeholder="Telephone" type="Number" id= "Telephone" text="{Telephone}" />
+			<Label text=""/>
+			<Button text="Save" width="100%"></Button>  
+			<Label text=""/>
+			<Button text="Exit" width="100%"></Button> 
+		</f:SimpleForm>
+	</VBox>
         
 
 </core:FragmentDefinition>

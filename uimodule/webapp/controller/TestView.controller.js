@@ -4,18 +4,23 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"jquery.sap.global",
 	"sap/ui/core/Fragment",
-	"sap/ui/model/json/JSONModel"
-
-], function(Controller,jQuery,Fragment,JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/m/MessageBox",
+], function(Controller,jQuery,Fragment,JSONModel,MessageBox) {
 	"use strict";
 
 	var PageController = Controller.extend("com.myorg.contactList.controller.TestView", {
 		onInit: function (oEvent) {
 	
 
-			var oModel = this.getOwnerComponent().getModel("oModelContacts"); // esta certo?
-			this.getView().setModel(oModel);
-			this.getView().bindElement("/ContactsCollection/0");
+			//nenhuma das 3 tentativas apresentou o resultado desejado
+
+			//let oModel = this.getView().getModel("oModelContacts");
+			//let oModel = this.getOwnerComponent().getModel("oModelContacts");
+			//let oModel = sap.ui.getCore().getModel("oModelContacts");
+
+			//this.getView().setModel(oModel);
+			//this.getView().bindElement("/ContactsCollection/0");
 			
 			this._showFormFragment("Display");
 
@@ -30,7 +35,7 @@ sap.ui.define([
 				return oFormFragment;
 			}
 
-			oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "TestView" + sFragmentName); //TestView ??
+			oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "com.myorg.contactList.view.TestView" + sFragmentName); //essa linha??
 
 			var myFragment = (this._formFragments[sFragmentName] = oFormFragment);
 			return myFragment;

@@ -6,6 +6,6 @@
 	xmlns="sap.m">
 	<Page
 		id="page"
-        showHeader="false">
+		showHeader="false">
 	</Page>
 </mvc:View>

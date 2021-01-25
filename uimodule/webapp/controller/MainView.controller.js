@@ -40,6 +40,9 @@ sap.ui.define([
           }
         ]
       });
+
+      sap.ui.getCore().setModel(oModel,"oModelContacts");
+
       return oModel;
     },
 

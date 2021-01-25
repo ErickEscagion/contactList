@@ -1,31 +1,49 @@
+//com.myorg.contactList.controller.TestView
+
 sap.ui.define([
-	"com/myorg/contactList/controller/BaseController",
-	"sap/m/MessageBox",
-	"sap/base/Log",
-	"sap/ui/model/json/JSONModel",
-	"sap/ui/core/Core",
-	"sap/ui/layout/HorizontalLayout",
-	"sap/ui/layout/VerticalLayout",
-	"sap/m/Dialog",
-	"sap/m/DialogType",
-	"sap/m/Button",
-	"sap/m/ButtonType",
-	"sap/m/Label",
-	"sap/m/MessageToast",
-	"sap/m/Text",
-	"sap/m/TextArea"
-  
-  ], function(Controller, MessageBox, Log, JSONModel, Core, HorizontalLayout, VerticalLayout, Dialog, DialogType, Button, ButtonType, Label, MessageToast, Text, TextArea) {
+	"sap/ui/core/mvc/Controller",
+	"jquery.sap.global",
+	"sap/ui/core/Fragment",
+	"sap/ui/model/json/JSONModel"
+
+], function(Controller,jQuery,Fragment,JSONModel) {
 	"use strict";
 
-  return Controller.extend("com.myorg.contactList.controller.TestView", {
-
-
+	var PageController = Controller.extend("com.myorg.contactList.controller.TestView", {
+		onInit: function (oEvent) {
 	
-    onClickMainViewButton: function(oEvent){
-		var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-		oRouter.navTo("MainView");
-	  }
 
-  });
+			var oModel = this.getOwnerComponent().getModel("oModelContacts"); // esta certo?
+			this.getView().setModel(oModel);
+			this.getView().bindElement("/ContactsCollection/0");
+			
+			this._showFormFragment("Display");
+
+		},
+
+		_formFragments: {},
+
+		_getFormFragment: function (sFragmentName) {
+			var oFormFragment = this._formFragments[sFragmentName];
+
+			if (oFormFragment) {
+				return oFormFragment;
+			}
+
+			oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "TestView" + sFragmentName); //TestView ??
+
+			var myFragment = (this._formFragments[sFragmentName] = oFormFragment);
+			return myFragment;
+		},
+
+		_showFormFragment : function (sFragmentName) {
+			var oPage = this.getView().byId("page");
+
+			oPage.removeAllContent();
+			oPage.insertContent(this._getFormFragment(sFragmentName));
+		}
+
+	});
+	
+	return PageController;
 });

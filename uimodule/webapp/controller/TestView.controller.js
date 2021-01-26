@@ -51,7 +51,7 @@ sap.ui.define([
 			//set selected row data in localModel
 			localModel.setProperty("/selectedRowData",selectedRowData());
 			
-			oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "com.myorg.contactList.view." + sFragmentName); 
+			oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "com.myorg.contactList.view." + sFragmentName, this); 
 			
 			var myFragment = (this._formFragments[sFragmentName] = oFormFragment);
 			return myFragment;
@@ -64,11 +64,27 @@ sap.ui.define([
 			oPage.insertContent(this._getFormFragment(sFragmentName));
 		},
 
-		onClickViewMainButton: function(oEvent){
-			this.navTo("MainView")
-		}
-		
+		onClickViewMainButton: function (oEvent) {
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			oRouter.navTo("MainView");
+		},
+
+		onPopupOk: function (nome, telefone, ref, indice) {
+			let oModel = ref.getView().getModel();
+			
+			if (!indice) {
+			  let newContact = {
+				"Name": nome,
+				"Telephone": telefone
+			  };
+			  oModel.oData.ContactsCollection.push(newContact);
+			}
+			else {
+			  oModel.oData.ContactsCollection[indice].Name = nome;
+			  oModel.oData.ContactsCollection[indice].Telephone = telefone;
+			}
+			ref.getView().setModel(oModel);
+		  },
 	});
-	
 	return PageController;
 });

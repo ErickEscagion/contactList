@@ -223,6 +223,15 @@ sap.ui.define([
     },
 
     onClickViewTestButton: function (oEvent) {
+      //get selected row from table (if any)
+      const selectedRows = this.getView().byId('Table').getSelectedIndices();
+      //get local model
+      const globalModel = this.getView().getModel();
+      //set new property with the list of selected rows
+      globalModel.setProperty("/selected",selectedRows);
+      //set model globally
+      this.getOwnerComponent().setModel(globalModel,"global");
+
       var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
       oRouter.navTo("TestView");
     }

@@ -9,9 +9,9 @@
     <VBox>
 		<f:SimpleForm title="Contacts" id="PopUpContacts">
 			<Label text="" />
-			<Input placeholder="Name" type="Text" id= "Name" text="{Telephone}"/>
+			<Input placeholder="Name" type="Text" id= "Name" value="{/selectedRowData/Name}"/>
 			<Label text=""/>
-			<Input placeholder="Telephone" type="Number" id= "Telephone" text="{Telephone}" />
+			<Input placeholder="Telephone" type="Number" id= "Telephone" value="{/selectedRowData/Telephone}" />
 			<Label text=""/>
 			<Button text="Save" width="100%"></Button>  
 			<Label text=""/>

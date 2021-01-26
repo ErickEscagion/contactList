@@ -12,16 +12,6 @@ sap.ui.define([
 	var PageController = Controller.extend("com.myorg.contactList.controller.TestView", {
 		onInit: function (oEvent) {
 			
-			
-			//nenhuma das 3 tentativas apresentou o resultado desejado
-			
-			//let oModel = this.getView().getModel("oModelContacts");
-			//let oModel = this.getOwnerComponent().getModel("oModelContacts");
-			//let oModel = sap.ui.getCore().getModel("oModelContacts");
-			
-			//this.getView().setModel(oModel);
-			//this.getView().bindElement("/ContactsCollection/0");
-			
 			//get model
 			const globalModel = this.getOwnerComponent().getModel("global");
 			//set the model locally
@@ -54,7 +44,7 @@ sap.ui.define([
 					//there's no row selected - return placeholders
 					return {
 						"Name": "Informe o nome",
-						"Telephone": "Informe o telefone"
+						"Telephone": "Informe o Telefone"
 					}
 				}
 			}
@@ -72,6 +62,10 @@ sap.ui.define([
 			
 			oPage.removeAllContent();
 			oPage.insertContent(this._getFormFragment(sFragmentName));
+		},
+
+		onClickViewMainButton: function(oEvent){
+			this.navTo("MainView")
 		}
 		
 	});

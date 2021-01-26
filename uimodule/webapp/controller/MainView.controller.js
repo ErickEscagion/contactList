@@ -180,7 +180,12 @@ sap.ui.define([
       this.OChangeDialog.open();
     },
 
-    onClickDeleteContactButton: function (oEvent) {
+    onClickDeleteButton: function (oEvent) {
+      const selectedRows = this.getView().byId('Table').getSelectedIndices();
+      if (selectedRows.length === 0) {
+        MessageBox.alert("SELECIONE UMA LINHA!!!");
+        return;
+      }
       if (!this.confirmDeletion) {
         this.confirmDeletion = new Dialog({
           type: DialogType.Message,
@@ -220,21 +225,51 @@ sap.ui.define([
         });
       }
       this.confirmDeletion.open();
+
+      if (selectedRows.length > 1) {
+        MessageBox.alert("CUIDADO MAIS DE 1 CONTATO SELECIONADO!!!");
+      }
     },
 
-    onClickViewTestButton: function (oEvent) {
+    onClickChangeButton: function(oEvent){
       //get selected row from table (if any)
       const selectedRows = this.getView().byId('Table').getSelectedIndices();
-      //get local model
-      const globalModel = this.getView().getModel();
-      //set new property with the list of selected rows
-      globalModel.setProperty("/selected",selectedRows);
-      //set model globally
-      this.getOwnerComponent().setModel(globalModel,"global");
+      if (selectedRows.length > 1) {
+        MessageBox.alert("SELECIONE APENAS UMA LINHA!!!");
+        return;
+      }
+      else if (selectedRows.length === 0) {
+        MessageBox.alert("SELECIONE UMA LINHA!!!");
+        return;
+      }
+      else{
+        //get local model
+        const globalModel = this.getView().getModel();
+        //set new property with the list of selected rows
+        globalModel.setProperty("/selected",selectedRows);
+        //set model globally
+        this.getOwnerComponent().setModel(globalModel,"global");
+        this.navTo("TestView")
+      }
+    },
 
-      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-      oRouter.navTo("TestView");
-    }
+    onClickAddButton: function(oEvent){
+      //get selected row from table (if any)
+      const selectedRows = this.getView().byId('Table').getSelectedIndices();
+      if (selectedRows.length > 0) {
+        MessageBox.alert("NÃO SELECIONE NENHUMA LINHA!!");
+        return;
+      }
+      else{
+        //get local model
+        const globalModel = this.getView().getModel();
+        //set new property with the list of selected rows
+        globalModel.setProperty("/selected",selectedRows);
+        //set model globally
+        this.getOwnerComponent().setModel(globalModel,"global");
+        this.navTo("TestView")
+      }
+    },
 
   });
 });

@@ -35,7 +35,7 @@ sap.ui.define([
 				return oFormFragment;
 			}
 
-			oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "com.myorg.contactList.view.TestView" + sFragmentName); //essa linha??
+			oFormFragment = sap.ui.xmlfragment(this.getView().getId(), "com.myorg.contactList.view." + sFragmentName); //essa linha??
 
 			var myFragment = (this._formFragments[sFragmentName] = oFormFragment);
 			return myFragment;

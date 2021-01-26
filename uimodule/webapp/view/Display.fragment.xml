@@ -13,9 +13,9 @@
 			<Label text=""/>
 			<Input  placeholder="Telephone" type="Text" id= "Telephone" value="{/selectedRowData/Telephone}" />
 			<Label text=""/>
-			<Button text="Save" press="onPopupOk(Name,Telephone,this,selectedRows)" ></Button>  
+			<Button text="Save" press="onPopupOk" ></Button>  
 			<Label text=""/>
-			<Button text="Exit" press="onClickViewMainButton"></Button> 
+			<Button text="Exit" press=".onClickViewMainButton"></Button> 
 		</f:SimpleForm>		
 	</VBox>
         

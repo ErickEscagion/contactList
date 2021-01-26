@@ -43,8 +43,8 @@ sap.ui.define([
 				} else {
 					//there's no row selected - return placeholders
 					return {
-						"Name": "Informe o nome",
-						"Telephone": "Informe o Telefone"
+						"Name": "",
+						"Telephone": ""
 					}
 				}
 			}
@@ -63,28 +63,30 @@ sap.ui.define([
 			oPage.removeAllContent();
 			oPage.insertContent(this._getFormFragment(sFragmentName));
 		},
-
+		
 		onClickViewMainButton: function (oEvent) {
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			oRouter.navTo("MainView");
 		},
+		
+		onPopupOk: function (oEvent) {
+			const oModel = this.getView().getModel();
+			const selectedRows = oModel.getProperty('/selected');
+			const tableData = oModel.getProperty('/ContactsCollection');
+			if(selectedRows.length){
 
-		onPopupOk: function (nome, telefone, ref, indice) {
-			let oModel = ref.getView().getModel();
-			
-			if (!indice) {
-			  let newContact = {
-				"Name": nome,
-				"Telephone": telefone
-			  };
-			  oModel.oData.ContactsCollection.push(newContact);
+				tableData[selectedRows[0]].Name = this.getView().byId('Name').getValue();
+				tableData[selectedRows[0]].Telephone = this.getView().byId('Telephone').getValue();
+			}else{
+				tableData.push({
+					"Name": this.getView().byId('Name').getValue(),
+					"Telephone": this.getView().byId('Telephone').getValue()
+				})
 			}
-			else {
-			  oModel.oData.ContactsCollection[indice].Name = nome;
-			  oModel.oData.ContactsCollection[indice].Telephone = telefone;
-			}
-			ref.getView().setModel(oModel);
-		  },
+			this.getOwnerComponent().setModel(oModel,"global");
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			oRouter.navTo("MainView");
+		},
 	});
 	return PageController;
 });

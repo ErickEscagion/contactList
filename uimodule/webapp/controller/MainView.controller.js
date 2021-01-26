@@ -19,8 +19,14 @@ sap.ui.define([
   return Controller.extend("com.myorg.contactList.controller.MainView", {
 
     onInit: function () {
-      var oJSONModel = this.initSampleDataModel();
-      this.getView().setModel(oJSONModel);
+      const globalModel = this.getOwnerComponent().getModel("global");
+
+      if(!globalModel){ 
+        var oJSONModel = this.initSampleDataModel();
+        this.getView().setModel(oJSONModel);
+      }else{
+        this.getView().setModel(globalModel);
+      }
     },
 
     initSampleDataModel: function () {

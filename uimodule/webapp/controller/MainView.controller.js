@@ -19,6 +19,14 @@ sap.ui.define([
   return Controller.extend("com.myorg.contactList.controller.MainView", {
 
     onInit: function () {
+      const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+      oRouter.attachRouteMatched(this.updateLocalModel, this);
+
+      var oJSONModel = this.initSampleDataModel();
+      this.getView().setModel(oJSONModel);
+    },
+
+    updateLocalModel: function(oEvent){
       const globalModel = this.getOwnerComponent().getModel("global");
 
       if(!globalModel){ 

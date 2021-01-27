@@ -34,7 +34,7 @@ sap.ui.define([
           this.getOwnerComponent().setModel(globalModel,"global");
         }
       };
-      
+
       oRouter.attachRouteMatched(refreshView, this);
       refreshView();
      },

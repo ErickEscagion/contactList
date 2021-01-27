@@ -1,5 +1,3 @@
-//com.myorg.contactList.controller.TestView
-
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"jquery.sap.global",

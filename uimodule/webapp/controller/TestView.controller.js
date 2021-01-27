@@ -10,22 +10,33 @@ sap.ui.define([
 	var PageController = Controller.extend("com.myorg.contactList.controller.TestView", {
 		onInit: function (oEvent) {
 			
-			//get model
 			const globalModel = this.getOwnerComponent().getModel("global");
-			//set the model locally
-			this.getView().setModel(globalModel);
-			this._showFormFragment("Display");
-			
 
-			const refreshTestView = () => {
-				globalModel.refresh(true);
+			const refreshView = () => {
+
+				this.getView().setModel(globalModel);
+				let selectedRows = globalModel.getProperty('/selected');
+				let tableData = globalModel.getProperty('/ContactsCollection');
+				
+				if(!selectedRows.length){
+					this.getOwnerComponent().getModel('global').setProperty('/selectedRowData/Name',)
+					this.getOwnerComponent().getModel('global').setProperty('/selectedRowData/Telephone',)
+				}else{
+					this.getOwnerComponent().getModel('global').setProperty('/selectedRowData/Name',tableData[selectedRows[0]].Name)
+					this.getOwnerComponent().getModel('global').setProperty('/selectedRowData/Telephone',tableData[selectedRows[0]].Telephone)
+				}
+
+				this.getOwnerComponent().getModel("global").refresh(true);
+				this._showFormFragment("Display");
 			  };
 		
 			  var oView = this.getView();
 			  oView.addEventDelegate({
-				   onAfterShow: refreshTestView
+				   onAfterShow: refreshView
 			  }, oView);      
-			  refreshTestView();
+			  refreshView();
+
+
 		},
 		
 		_formFragments: {},
@@ -81,8 +92,8 @@ sap.ui.define([
 			const oModel = this.getView().getModel();
 			const selectedRows = oModel.getProperty('/selected');
 			const tableData = oModel.getProperty('/ContactsCollection');
-			if(selectedRows.length){
 
+			if(selectedRows.length){
 				tableData[selectedRows[0]].Name = this.getView().byId('Name').getValue();
 				tableData[selectedRows[0]].Telephone = this.getView().byId('Telephone').getValue();
 			}else{
@@ -91,6 +102,7 @@ sap.ui.define([
 					"Telephone": this.getView().byId('Telephone').getValue()
 				})
 			}
+
 			this.getOwnerComponent().setModel(oModel,"global");
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			oRouter.navTo("MainView");

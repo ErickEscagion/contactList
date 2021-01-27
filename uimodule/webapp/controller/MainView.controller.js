@@ -41,7 +41,6 @@ sap.ui.define([
       refreshView();
     },
     
-    
     initSampleDataModel: function () {
       var oModel = new JSONModel({
         "ContactsCollection": [

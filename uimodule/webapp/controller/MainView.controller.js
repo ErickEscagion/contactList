@@ -12,34 +12,36 @@ sap.ui.define([
   "sap/m/Text",
   "sap/m/TextArea",
   "sap/m/MessageBox",
-
+  
 ], function (Controller, Log, JSONModel, Core, Dialog, DialogType, Button, ButtonType, Label, MessageToast, Text, TextArea, MessageBox) {
   "use strict";
-
+  
   return Controller.extend("com.myorg.contactList.controller.MainView", {
-
+    
     onInit: function () {
-
-      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
       
       const refreshView = () => {
         const globalModel = this.getOwnerComponent().getModel("global");
-
+        
         if(!globalModel){ 
           var oJSONModel = this.initSampleDataModel();
-          this.getView().setModel(oJSONModel);
+          //this.getView().setModel(oJSONModel);
           this.getOwnerComponent().setModel(oJSONModel,"global");
         }else{
-          this.getView().setModel(globalModel);
+          //this.getView().setModel(globalModel);
           this.getOwnerComponent().setModel(globalModel,"global");
         }
+        this.getOwnerComponent().getModel("global").refresh(true);
       };
 
-      oRouter.attachRouteMatched(refreshView, this);
+      var oView = this.getView();
+      oView.addEventDelegate({
+           onAfterShow: refreshView
+      }, oView);      
       refreshView();
-     },
-
-
+    },
+    
+    
     initSampleDataModel: function () {
       var oModel = new JSONModel({
         "ContactsCollection": [
@@ -57,13 +59,13 @@ sap.ui.define([
           }
         ]
       });
-
+      
       sap.ui.getCore().setModel(oModel,"oModelContacts");
-
+      
       return oModel;
     },
-
-
+    
+    
     onClickAddContactButton: function () {
       if (!this.oSubmitDialog) {
         this.oSubmitDialog = new Dialog({
@@ -78,7 +80,7 @@ sap.ui.define([
               width: "100%",
               placeholder: "Adicione o nome (obrigatorio)",
             }),
-
+            
             new Label({
               text: "Telefone",
               labelFor: "submissionTelephoneAdd"
@@ -95,12 +97,12 @@ sap.ui.define([
             press: function () {
               let varName = Core.byId("submissionNameAdd").getValue();
               let varTelephone = Core.byId("submissionTelephoneAdd").getValue();
-
+              
               let newContact = {
                 "Name": varName,
                 "Telephone": varTelephone
               };
-
+              
               let oModel = this.getView().getModel();
               oModel.oData.ContactsCollection.push(newContact);
               let newModel = new JSONModel(oModel.oData);
@@ -122,7 +124,7 @@ sap.ui.define([
       }
       this.oSubmitDialog.open();
     },
-
+    
     onClickChangeContactButton: function (oEvent) {
       if (!this.OChangeDialog) {
         this.OChangeDialog = new Dialog({
@@ -181,7 +183,7 @@ sap.ui.define([
           })
         });
       }
-
+      
       let indices = this.getView().byId('Table').getSelectedIndices()
       if (indices.length > 1) {
         MessageBox.alert("SELECIONE APENAS UMA LINHA!!!");
@@ -197,7 +199,7 @@ sap.ui.define([
       Core.byId('submissionTelephoneChange').setValue(linhaSelecionada.Telephone);
       this.OChangeDialog.open();
     },
-
+    
     onClickDeleteButton: function (oEvent) {
       const selectedRows = this.getView().byId('Table').getSelectedIndices();
       if (selectedRows.length === 0) {
@@ -243,12 +245,12 @@ sap.ui.define([
         });
       }
       this.confirmDeletion.open();
-
+      
       if (selectedRows.length > 1) {
         MessageBox.alert("CUIDADO MAIS DE 1 CONTATO SELECIONADO!!!");
       }
     },
-
+    
     onClickChangeButton: function(oEvent){
       //get selected row from table (if any)
       const selectedRows = this.getView().byId('Table').getSelectedIndices();
@@ -270,7 +272,7 @@ sap.ui.define([
         this.navTo("TestView")
       }
     },
-
+    
     onClickAddButton: function(oEvent){
       //get selected row from table (if any)
       const selectedRows = this.getView().byId('Table').getSelectedIndices();
@@ -280,7 +282,8 @@ sap.ui.define([
       }
       else{
         //get local model
-        const globalModel = this.getView().getModel();
+        //const globalModel = this.getView().getModel();
+        const globalModel = this.getOwnerComponent().getModel("global");
         //set new property with the list of selected rows
         globalModel.setProperty("/selected",selectedRows);
         //set model globally
@@ -288,6 +291,6 @@ sap.ui.define([
         this.navTo("TestView")
       }
     },
-
+    
   });
 });

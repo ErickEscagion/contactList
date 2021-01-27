@@ -19,17 +19,26 @@ sap.ui.define([
   return Controller.extend("com.myorg.contactList.controller.MainView", {
 
     onInit: function () {
-      const globalModel = this.getOwnerComponent().getModel("global");
 
-      if(!globalModel){ 
-        var oJSONModel = this.initSampleDataModel();
-        this.getView().setModel(oJSONModel);
-        this.getOwnerComponent().setModel(oJSONModel,"global");
-      }else{
-        this.getView().setModel(globalModel);
-        this.getOwnerComponent().setModel(globalModel,"global");
-      }
-    },
+      var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+      
+      const refreshView = () => {
+        const globalModel = this.getOwnerComponent().getModel("global");
+
+        if(!globalModel){ 
+          var oJSONModel = this.initSampleDataModel();
+          this.getView().setModel(oJSONModel);
+          this.getOwnerComponent().setModel(oJSONModel,"global");
+        }else{
+          this.getView().setModel(globalModel);
+          this.getOwnerComponent().setModel(globalModel,"global");
+        }
+      };
+      
+      oRouter.attachRouteMatched(refreshView, this);
+      refreshView();
+     },
+
 
     initSampleDataModel: function () {
       var oModel = new JSONModel({

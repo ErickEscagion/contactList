@@ -19,19 +19,19 @@
           </FlexBox>
 
           <content>
-            <t:Table id="Table" rows="{/ContactsCollection}" selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste" ariaLabelledBy="title">
+            <t:Table id="Table" rows="{global>/ContactsCollection}" selectionMode="MultiToggle" visibleRowCount="7" paste="onPaste" ariaLabelledBy="title">
               <t:columns>
                 <t:Column>
                 	<Label text="Nome" />
 	      			<t:template>
-						<Text id= "TableName" text="{Name}" wrapping="false" />
+						<Text id= "TableName" text="{global>Name}" wrapping="false" />
 					</t:template>
                 </t:Column>
 
                 <t:Column>
                 	<Label text="Telefone" />
                 	<t:template>
-						<Text id= "TelephoneName" text="{Telephone}" wrapping="false" />
+						<Text id= "TelephoneName" text="{global>Telephone}" wrapping="false" />
 					</t:template>
                 </t:Column>
               </t:columns>

@@ -54,6 +54,7 @@ sap.ui.define([
       return oModel;
     },
 
+
     onClickAddContactButton: function () {
       if (!this.oSubmitDialog) {
         this.oSubmitDialog = new Dialog({

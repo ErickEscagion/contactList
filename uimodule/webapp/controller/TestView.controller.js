@@ -16,6 +16,16 @@ sap.ui.define([
 			this.getView().setModel(globalModel);
 			this._showFormFragment("Display");
 			
+
+			const refreshTestView = () => {
+				globalModel.refresh(true);
+			  };
+		
+			  var oView = this.getView();
+			  oView.addEventDelegate({
+				   onAfterShow: refreshTestView
+			  }, oView);      
+			  refreshTestView();
 		},
 		
 		_formFragments: {},

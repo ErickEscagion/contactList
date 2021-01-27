@@ -215,11 +215,12 @@ sap.ui.define([
             type: ButtonType.Emphasized,
             text: "Confirmar",
             press: function () {
+
               let newModel = new JSONModel();
-              let oldModel = this.getView().getModel().oData.ContactsCollection;
-              //define o atributo ContactsCollection como sendo um array, pra poder fazer push depois
+              let oldModel = this.getOwnerComponent().getModel("global").oData.ContactsCollection;
               newModel.oData.ContactsCollection = [];
               let indiceAExcluir = this.getView().byId('Table').getSelectedIndices();
+              
               for (let i = 0; i < oldModel.length; i++) {
                 //verifica se a linha atual é a que precisa excluir
                 if (!indiceAExcluir.includes(i) || !indiceAExcluir.length) {
@@ -230,8 +231,8 @@ sap.ui.define([
                   newModel.oData.ContactsCollection.push(newContact);
                 }
               }
-              this.getView().setModel(newModel);
-              this.getView().byId('Table').setSelectedIndex()
+              this.getOwnerComponent().setModel(newModel,"global");
+              this.getView().byId('Table').setSelectedIndex();
               MessageToast.show("Contato(s) Excluido(s)");
               this.confirmDeletion.close();
             }.bind(this)
@@ -252,7 +253,6 @@ sap.ui.define([
     },
     
     onClickChangeButton: function(oEvent){
-      //get selected row from table (if any)
       const selectedRows = this.getView().byId('Table').getSelectedIndices();
       if (selectedRows.length > 1) {
         MessageBox.alert("SELECIONE APENAS UMA LINHA!!!");
@@ -263,30 +263,22 @@ sap.ui.define([
         return;
       }
       else{
-        //get local model
-        const globalModel = this.getView().getModel();
-        //set new property with the list of selected rows
+        const globalModel = this.getOwnerComponent().getModel("global");
         globalModel.setProperty("/selected",selectedRows);
-        //set model globally
         this.getOwnerComponent().setModel(globalModel,"global");
         this.navTo("TestView")
       }
     },
     
     onClickAddButton: function(oEvent){
-      //get selected row from table (if any)
       const selectedRows = this.getView().byId('Table').getSelectedIndices();
       if (selectedRows.length > 0) {
         MessageBox.alert("NÃO SELECIONE NENHUMA LINHA!!");
         return;
       }
       else{
-        //get local model
-        //const globalModel = this.getView().getModel();
         const globalModel = this.getOwnerComponent().getModel("global");
-        //set new property with the list of selected rows
         globalModel.setProperty("/selected",selectedRows);
-        //set model globally
         this.getOwnerComponent().setModel(globalModel,"global");
         this.navTo("TestView")
       }

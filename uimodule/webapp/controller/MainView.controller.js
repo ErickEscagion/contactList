@@ -127,9 +127,7 @@ sap.ui.define([
         return;
       }
       else{
-        const globalModel = this.getOwnerComponent().getModel("global");
-        globalModel.setProperty("/selected",selectedRows);
-        this.getOwnerComponent().setModel(globalModel,"global");
+        this.setPropertyInGlobalModel("global","/selected",selectedRows, this);
         this.navTo("TestView")
       }
     },
@@ -141,12 +139,18 @@ sap.ui.define([
         return;
       }
       else{
-        const globalModel = this.getOwnerComponent().getModel("global");
-        globalModel.setProperty("/selected",selectedRows);
-        this.getOwnerComponent().setModel(globalModel,"global");
+        this.setPropertyInGlobalModel("global","/selected",selectedRows, this);
         this.navTo("TestView")
       }
     },
-    
+
+    setPropertyInGlobalModel: function(globalModelName, propertyPath, propertyValue, referenceToController) { 
+
+      const globalModel = referenceToController.getOwnerComponent().getModel(globalModelName);
+      globalModel.setProperty(propertyPath, propertyValue);
+      referenceToController.getOwnerComponent().setModel(globalModel, globalModelName);
+
+    }
+
   });
 });

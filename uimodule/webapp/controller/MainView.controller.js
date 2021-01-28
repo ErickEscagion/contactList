@@ -19,28 +19,25 @@ sap.ui.define([
   return Controller.extend("com.myorg.contactList.controller.MainView", {
     
     onInit: function () {
-      
-      const refreshView = () => {
-        const globalModel = this.getOwnerComponent().getModel("global");
+      var oView = this.getView();
+      oView.addEventDelegate({
+           onAfterShow: this.refreshView.bind(this)
+      }, oView);      
+      this.refreshView();
+    },
+    
+    refreshView: function() {
+      const globalModel = this.getOwnerComponent().getModel("global");
         
         if(!globalModel){ 
           var oJSONModel = this.initSampleDataModel();
-          //this.getView().setModel(oJSONModel);
           this.getOwnerComponent().setModel(oJSONModel,"global");
         }else{
-          //this.getView().setModel(globalModel);
           this.getOwnerComponent().setModel(globalModel,"global");
         }
         this.getOwnerComponent().getModel("global").refresh(true);
-      };
-
-      var oView = this.getView();
-      oView.addEventDelegate({
-           onAfterShow: refreshView
-      }, oView);      
-      refreshView();
     },
-    
+
     initSampleDataModel: function () {
       var oModel = new JSONModel({
         "ContactsCollection": [
@@ -95,10 +92,12 @@ sap.ui.define([
                   newModel.oData.ContactsCollection.push(newContact);
                 }
               }
-              this.getOwnerComponent().setModel(newModel,"global");
               this.getView().byId('Table').setSelectedIndex();
+              //this.getOwnerComponent().setModel(newModel,"global");
+              this.setPropertyInGlobalModel("global","/ContactsCollection",newModel.oData.ContactsCollection);
               MessageToast.show("Contato(s) Excluido(s)");
               this.confirmDeletion.close();
+              this.refreshView();
             }.bind(this)
           }),
           endButton: new Button({
